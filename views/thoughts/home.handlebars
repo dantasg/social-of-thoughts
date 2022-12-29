@@ -1,0 +1,81 @@
+<div class='home-header'>
+  {{#if search}}
+    {{#if thoughtsQty}}
+      <p>
+        Foram encontrados
+        <span>
+          {{thoughtsQty}}
+        </span>
+        pensamentos
+      </p>
+    {{else}}
+      <h1>
+        Não foi encontrado nenhum pensamento!
+      </h1>
+    {{/if}}
+  {{else}}
+    <h1>
+      Todos os nossos pensamentos
+    </h1>
+  {{/if}}
+
+  <form action='/' method='get'>
+    <input type='text' name='search' placeholder='Está buscando por algo?' />
+    <input type='submit' value='Buscar' class='btn' />
+  </form>
+  <div class='order-container'>
+    <span>
+      Ordenar por:
+    </span>
+    <form action='/' method='get'>
+      <input type='hidden' name='search' value='{{this.search}}' />
+      <input type='hidden' name='order' value='new' />
+      <button type='submit'>
+        <i class='bi bi-arrow-up'></i>
+      </button>
+    </form>
+    <form action='/' method='get'>
+      <input type='hidden' name='search' value='{{this.search}}' />
+      <input type='hidden' name='order' value='old' />
+      <button type='submit'>
+        <i class='bi bi-arrow-down'></i>
+      </button>
+    </form>
+    <a href='/'>
+      Limpar
+    </a>
+  </div>
+</div>
+
+<div class='thoughts-container'>
+  {{#each thought}}
+    <figure>
+      <blockquote>
+        "{{this.title}}"
+        <div class='counter-like'>
+          <form action='/thoughts/like' method='post'>
+            <input type='hidden' name='like' value='{{this.id}}' />
+            <button type='submit'>
+              <i class='bi bi-hand-thumbs-up like'>
+                <i class='bi bi-arrow-right'>
+                  {{this.like}}
+                </i>
+              </i>
+            </button>
+          </form>
+        </div>
+      </blockquote>
+
+      <figcaption>
+        por
+        <span>
+          {{this.User.name}} {{this.User.secondname}}
+        </span>
+        email:
+        <span>
+          {{this.User.email}}
+        </span>
+      </figcaption>
+    </figure>
+  {{/each}}
+</div>
